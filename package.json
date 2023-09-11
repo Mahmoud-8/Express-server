@@ -1,0 +1,15 @@
+{
+  "name": "spa-express-server-mahmoud-8",
+  "version": "1.0.0",
+  "description": "## Set up:   - Set up a new project using [express](https://expressjs.com/en/starter/installing.html) ### 1. Create a project:",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
