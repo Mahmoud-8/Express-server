@@ -31,7 +31,19 @@ app.put('/todos', (req, res) => {
 });
 
 // DELETE request for /todos
+app.delete('/todos', (req, res) => {
 
+  res.status(200).json({ message: 'Data deleted successfully' });
+});
+
+app.use((req, res, next) => {
+  res.status(404).json({ message: 'Path not found' });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Internal server error' });
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
