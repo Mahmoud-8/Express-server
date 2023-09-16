@@ -1,5 +1,6 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
+const { v4: uuidv4 } = require('uuid'); 
 const app = express();
 const port = 3000;
 
@@ -39,16 +40,28 @@ app.get('/todos', (req, res) => {
   res.status(200).json(mockdata);
 });
 
+
+// Generate a new UUID
+const uuid = uuidv4();
+console.log(uuid);
+
+
 // GET request for /todos/:id
 
 app.post('/todos',validTask, (req, res) => {
   const errors = validationResult(req);
 
-
   if (!errors.isEmpty()) {
     return res.status(400).json({errors: errors.array() });
   }
-  const newTask = req.body;
+
+
+  const newTask = {
+
+    task: req.body.task,
+    status: req.body.status,
+    id: uuidv4(),
+  }
   mockdata.push(newTask);
 
   res.status(201).json({ message: 'Data created successfully' });
@@ -68,6 +81,13 @@ app.delete('/todos', (req, res) => {
 });
 
 // Error handling
+
+app.use('*', (req, res, next) => {
+  const error = new Error('There is no path here!');
+  error.statusCode = 404;
+  next(error);
+});
+
 
 app.use((err, req, res, next) => {
   console.error(err);
