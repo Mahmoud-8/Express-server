@@ -1,8 +1,14 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const { v4: uuidv4 } = require('uuid');
+const cors = require('cors'); // Import the cors library
+
 const app = express();
 const port = 3000;
+
+app.use(express.json());
+ // Enable CORS middleware
+ app.use(cors());
 
 app.use(express.json());
 
@@ -45,7 +51,7 @@ app.post('/todos', validTask, (req, res) => {
   const newTask = {
     task: req.body.task,
     status: req.body.status,
-    id: uuidv4(), // Generate a new UUID for each task
+    id: uuidv4(),
   };
 
   mockdata.push(newTask);
