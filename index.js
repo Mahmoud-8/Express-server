@@ -34,8 +34,6 @@ let connectionStringOfDB = process.env.DATABASE_CONNECTION;
 
 
   // Define the Todo schema and model
-
- 
   const todoSchema = new mongoose.Schema({
     task: String,
     status: String,
