@@ -5,10 +5,6 @@ const cors = require("cors"); // Import the cors library
 const mongoose = require("mongoose");
 require('dotenv').config()
 
-
-
-
-
 const app = express();
 const port = 3000;
 
@@ -38,8 +34,6 @@ let connectionStringOfDB = process.env.DATABASE_CONNECTION;
 
 
   // Define the Todo schema and model
-
- 
   const todoSchema = new mongoose.Schema({
     task: String,
     status: String,
