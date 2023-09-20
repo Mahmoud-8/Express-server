@@ -5,10 +5,6 @@ const cors = require("cors"); // Import the cors library
 const mongoose = require("mongoose");
 require('dotenv').config()
 
-
-
-
-
 const app = express();
 const port = 3000;
 
