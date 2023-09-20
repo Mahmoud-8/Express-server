@@ -1,86 +1,82 @@
-# A backend for the to do app!
+# Server Documentation
 
-## Set up:  
-- Set up a new project using [express](https://expressjs.com/en/starter/installing.html)
-### 1. Create a project: 
+This documentation provides an overview of the server code for your application, detailing the routes, functionality, and usage instructions.
 
-  Work on the terminal:
-- `git init` 
-This command creates a git project
-Add a `.gitignore` and add the line `node_modules` to the file. 
+## Table of Contents
 
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Project Structure](#project-structure)
+- [API Routes](#api-routes)
+  - [GET /todos](#get-todos)
+  - [POST /todos](#post-todos)
+  - [PUT /todos/:id](#put-todosid)
+  - [DELETE /todos/:id](#delete-todosid)
+- [Error Handling](#error-handling)
+- [Running the Server](#running-the-server)
 
-- `npm init`
-This command takes you though the process of creating the package.json file. Press `enter` to select the options suggested. 
-You can make changes to this file afterwards.
+## Introduction
 
-  ### 2. Install Express
+This Express.js server provides the backend for a to-do list application. It allows users to perform CRUD (Create, Read, Update, Delete) operations on to-do tasks stored in a MongoDB database. The server also handles validation and error responses.
 
-- `npm install express`
+## Prerequisites
 
-### 3. Create the first file
+Before running this server, make sure you have the following installed:
 
-- Create a file `index.js` 
-and enter the template code here: 
+- Node.js
+- MongoDB
 
-```js 
-const express = require('express')
-const app = express()
-const port = 3000
+## Project Structure
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+The server code follows a typical Express.js project structure with the following key files and directories:
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
-```
+- `server.js`: The main server file.
+- `models/`: Contains the MongoDB schema and model definition.
+- `routes/`: Contains route handlers for different API endpoints.
+- `middlewares/`: Contains custom middleware functions.
+- `.env`: Configuration file for environment variables.
 
-### 4. Start the server!
-On the terminal: type
+## API Routes
 
-`node index.js`
+### GET /todos
 
-Now the server is running!
-- You should see a console log on the terminal
+- **Description**: Fetch all to-do tasks from the database.
+- **Request**: None.
+- **Response**: An array of to-do tasks in JSON format.
+- **Error Response**: 500 Internal Server Error if there's an issue with the database.
 
-- And you can send requests to it to `http://localhost:3000`
-- Use Thunder client to send a request and inspect the response you get back!
+### POST /todos
 
-**Optional**
-Add a line to the package.json file in the `script` section: 
+- **Description**: Create a new to-do task and store it in the database.
+- **Request**: JSON body with `task` and `status` properties.
+- **Response**: JSON response with success status and a message.
+- **Error Response**: 400 Bad Request if input validation fails, 500 Internal Server Error if there's an issue with the database.
 
-`"start": node index.js`
+### PUT /todos/:id
 
-Now you can type `npm start` on the terminal to start the server!
+- **Description**: Update an existing to-do task by its ID.
+- **Request**: JSON body with `task` and `status` properties.
+- **Response**: JSON response with success status and a message.
+- **Error Response**: 400 Bad Request if input validation fails, 404 Not Found if the task ID does not exist, 500 Internal Server Error if there's an issue with the database.
 
+### DELETE /todos/:id
 
+- **Description**: Delete an existing to-do task by its ID.
+- **Request**: None.
+- **Response**: JSON response with success status and a message.
+- **Error Response**: 404 Not Found if the task ID does not exist, 500 Internal Server Error if there's an issue with the database.
 
-## Task 1: Requests and error handling
+## Error Handling
 
+The server provides error handling for various scenarios, including invalid input, resource not found, and internal server errors. Errors are returned as JSON responses with appropriate status codes.
 
-1. Create a set of mock data to use
+## Running the Server
 
-##### Example data: 
-``` js
-let mockdata = [
-  { text: "Build a to do app!", status: 'open', id: '01' },
-  { text: "Learn SQL", status: 'open', id: '02'  },
-  { text: "Practice JS on Codewars", status: 'open', id: '03'   },
-  { text: "Commit your code!", status: 'open', id: '04'},
-  { text: "Relax", status: 'open', id: '05' },
-  { text: "Test the app", status: 'open', id: '06' },
-]
+To run the server, follow these steps:
 
-```
+1. Ensure you have Node.js and MongoDB installed.
 
-2. Add a  GET request in the `index.js` for the path `/todos` and a callback function in which send back some data that matches the data of the to do app! Add a status code for a successfull GET resquest (200)
+2. Create a `.env` file in the root directory with the following content:
 
-
-3. Add a POST request in the `index.js` for the path `/todos` and a callback function in which send back a message that the data was created. 
-4. Add a PUT request in the `index.js` for the path `/todos` and a callback function in which send back a message that the data was updated. 
-3. Add a DELETE request in the `index.js` for the path `/todos` and a callback function in which send back a message that the data was deleted. 
-
-### Error handling:
-- Add error handling middleware for each controller, and for undefined paths
+   ```env
+   DATABASE_CONNECTION=YOUR_MONGODB_CONNECTION_URL
