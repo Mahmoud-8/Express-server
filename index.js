@@ -102,6 +102,27 @@ console.log(errors);
 
 
 
+// PUT request 
+app.put('/todos/:id', validTask, async (req, res, next) => {
+  const taskId = req.params.id;
+  const updatedTask = req.body;
+
+  try {
+    const task = await Todo.findOneAndUpdate({ id: taskId }, updatedTask, {
+      new: true,
+    });
+
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    res.status(200).json({ message: 'Data updated successfully' });
+  } catch (error) {
+    console.error(error);
+    const putError = new Error('Could not update data');
+    next(putError);
+  }
+});
 
 // DELETE request 
 app.delete('/todos/:id', async (req, res, next) => {
